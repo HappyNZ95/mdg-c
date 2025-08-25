@@ -1,16 +1,26 @@
 #include <inttypes.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-char *get_user_input(char user_prompt[150], char buffer[150]) {
+char *get_user_input(char user_prompt[150], char buffer[150],
+                     bool is_optional) {
 
   char user_input[150];
 
   printf("%s", user_prompt);
-  strcpy(buffer, fgets(user_input, sizeof(user_input), stdin));
-  buffer[strcspn(buffer, "\n")] = '\0';
+
+  bool need_input = true;
+
+  while (need_input) {
+    strcpy(buffer, fgets(user_input, sizeof(user_input), stdin));
+    buffer[strcspn(buffer, "\n")] = '\0';
+    if (need_input) {
+      need_input = false;
+    }
+  }
 
   return buffer;
 }
@@ -38,7 +48,7 @@ int main(void) {
 
   // Title
   char titlebuf[50];
-  get_user_input("What's your title?\n", titlebuf);
+  get_user_input("What's your title?\n", titlebuf, true);
 
   printf("%s.md", titlebuf);
 
