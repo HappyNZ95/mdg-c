@@ -5,22 +5,14 @@
 #include <string.h>
 #include <time.h>
 
-char *get_user_input(char user_prompt[150], char buffer[150],
-                     bool is_optional) {
+char *get_user_input(char user_prompt[150], char buffer[150]) {
 
   char user_input[150];
 
   printf("%s", user_prompt);
 
-  bool need_input = true;
-
-  while (need_input) {
-    strcpy(buffer, fgets(user_input, sizeof(user_input), stdin));
-    buffer[strcspn(buffer, "\n")] = '\0';
-    if (need_input) {
-      need_input = false;
-    }
-  }
+  strcpy(buffer, fgets(user_input, sizeof(user_input), stdin));
+  buffer[strcspn(buffer, "\n")] = '\0';
 
   return buffer;
 }
@@ -48,9 +40,13 @@ int main(void) {
 
   // Title
   char titlebuf[50];
-  get_user_input("What's your title?\n", titlebuf, true);
-
+  titlebuf[0] = '\0';
+  while (titlebuf[0] == '\0') {
+    get_user_input("What's your title?\n", titlebuf);
+  }
   printf("%s.md", titlebuf);
+
+  // Tags
 
   return 0;
 }
