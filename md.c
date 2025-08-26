@@ -66,8 +66,6 @@ int main(void) {
     }
 
     // Additional Properties
-    //
-    //
     struct AdditionalProperty {
       char *key;
       char *value;
@@ -80,14 +78,26 @@ int main(void) {
     int count = 0;
     char ap_buf[100];
 
-    while (ap_buf[0] != '\0') {
+    while (1) {
       get_user_input("Additional Properties? (key=value)", ap_buf);
+      if (ap_buf[0] == '\0') {
+        break;
+      }
       char *key = strtok(ap_buf, delimiter);
       char *value = strtok(NULL, delimiter);
-      additional_properties[count].key = key;
-      additional_properties[count].value = value;
+      if (key != NULL && value != NULL) {
+        additional_properties[count].key = key;
+        additional_properties[count].value = value;
+      }
+      count++;
     }
 
-    return 0;
+    for (int i = 0; i < count || i < 10; i++) {
+      printf("Additional Properties %i\n", i);
+      printf("Key: %s\n", additional_properties[i].key);
+      printf("Value: %s\n", additional_properties[i].value);
+      printf("---\n");
+    }
   }
+  return 0;
 }
