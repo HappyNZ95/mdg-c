@@ -52,52 +52,55 @@ int main(void) {
 
   char *tags[20];
   char *delimiters = " ,;";
-  char *token;
+  char *tags_token;
   int count = 0;
 
   if (tags_buf[0] != '\0') {
-    token = strtok(tags_buf, delimiters);
+    tags_token = strtok(tags_buf, delimiters);
 
-    while (token != NULL && count < 20) {
-      tags[count] = token;
+    while (tags_token != NULL && count < 20) {
+      tags[count] = tags_token;
       printf("Tag %i: %s\n", count, tags[count]);
       count++;
-      token = strtok(NULL, delimiters);
+      tags_token = strtok(NULL, delimiters);
     }
+  }
 
-    // Additional Properties
-    struct AdditionalProperty {
-      char *key;
-      char *value;
-    };
+  // Additional Properties
+  struct AdditionalProperty {
+    char *key;
+    char *value;
+  };
 
-    char *delimiter = "=";
-    char *token;
+  char *delimiter = "=";
+  char *keyvalue_token = "";
 
-    struct AdditionalProperty additional_properties[10];
-    int count = 0;
-    char ap_buf[100];
+  struct AdditionalProperty additional_properties[10];
+  count = 0;
+  char addprop_buf[100];
 
-    while (1) {
-      get_user_input("Additional Properties? (key=value)", ap_buf);
-      if (ap_buf[0] == '\0') {
-        break;
-      }
-      char *key = strtok(ap_buf, delimiter);
-      char *value = strtok(NULL, delimiter);
-      if (key != NULL && value != NULL) {
-        additional_properties[count].key = key;
-        additional_properties[count].value = value;
-      }
-      count++;
+  while (1) {
+    get_user_input("Additional Properties? (key=value)", addprop_buf);
+    if (addprop_buf[0] == '\0') {
+      break;
     }
-
-    for (int i = 0; i < count || i < 10; i++) {
-      printf("Additional Properties %i\n", i);
-      printf("Key: %s\n", additional_properties[i].key);
-      printf("Value: %s\n", additional_properties[i].value);
-      printf("---\n");
+    char *key = strtok(addprop_buf, delimiter);
+    printf("%s", key); // printdb
+    char *value = strtok(NULL, delimiter);
+    if (key != NULL && value != NULL) {
+      additional_properties[count].key = key;
+      printf("additional_properties[0].key: %s",
+             additional_properties[0].key); // printdb
+      additional_properties[count].value = value;
     }
+    count++;
+  }
+
+  for (int i = 0; i < count || i < 10; i++) {
+    printf("Additional Properties %i\n", i);
+    printf("Key: %s\n", additional_properties[i].key);
+    printf("Value: %s\n", additional_properties[i].value);
+    printf("---\n");
   }
   return 0;
 }
