@@ -51,7 +51,7 @@ int main(void) {
   get_user_input("Tags:\n", tags_buf);
 
   char *tags[20];
-  const char *delimiters = " ,;";
+  char *delimiters = " ,;";
   char *token;
   int count = 0;
 
@@ -64,6 +64,30 @@ int main(void) {
       count++;
       token = strtok(NULL, delimiters);
     }
+
+    // Additional Properties
+    //
+    //
+    struct AdditionalProperty {
+      char *key;
+      char *value;
+    };
+
+    char *delimiter = "=";
+    char *token;
+
+    struct AdditionalProperty additional_properties[10];
+    int count = 0;
+    char ap_buf[100];
+
+    while (ap_buf[0] != '\0') {
+      get_user_input("Additional Properties? (key=value)", ap_buf);
+      char *key = strtok(ap_buf, delimiter);
+      char *value = strtok(NULL, delimiter);
+      additional_properties[count].key = key;
+      additional_properties[count].value = value;
+    }
+
     return 0;
   }
 }
