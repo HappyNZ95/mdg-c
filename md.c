@@ -57,12 +57,12 @@ int main(void) {
 
   if (tags_buf[0] != '\0') {
     token = strtok(tags_buf, delimiters);
-    printf("Tag %i: %s\n", count, tags[count]);
 
-    while (token != NULL) {
-
+    while (token != NULL && count < 20) {
+      tags[count] = token;
       printf("Tag %i: %s\n", count, tags[count]);
       count++;
+      token = strtok(NULL, delimiters);
     }
     return 0;
   }
