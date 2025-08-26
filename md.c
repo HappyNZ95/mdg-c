@@ -39,14 +39,31 @@ int main(void) {
   printf("%s\n", dtbuffer);
 
   // Title
-  char titlebuf[50];
-  titlebuf[0] = '\0';
-  while (titlebuf[0] == '\0') {
-    get_user_input("What's your title?\n", titlebuf);
+  char title_buf[50];
+  title_buf[0] = '\0';
+  while (title_buf[0] == '\0') {
+    get_user_input("What's your title?\n", title_buf);
   }
-  printf("%s.md", titlebuf);
+  printf("%s.md\n", title_buf);
 
   // Tags
+  char tags_buf[100];
+  get_user_input("Tags:\n", tags_buf);
 
-  return 0;
+  char *tags[20];
+  const char *delimiters = " ,;";
+  char *token;
+  int count = 0;
+
+  if (tags_buf[0] != '\0') {
+    token = strtok(tags_buf, delimiters);
+    printf("Tag %i: %s\n", count, tags[count]);
+
+    while (token != NULL) {
+
+      printf("Tag %i: %s\n", count, tags[count]);
+      count++;
+    }
+    return 0;
+  }
 }
