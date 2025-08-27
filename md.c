@@ -79,28 +79,28 @@ int main(void) {
   count = 0;
   char addprop_buf[100];
 
-  while (1) {
-    get_user_input("Additional Properties? (key=value)", addprop_buf);
+  while (count < 10) {
+    get_user_input("Additional Properties? (key=value)\n", addprop_buf);
     if (addprop_buf[0] == '\0') {
       break;
     }
     char *key = strtok(addprop_buf, delimiter);
-    printf("%s", key); // printdb
     char *value = strtok(NULL, delimiter);
     if (key != NULL && value != NULL) {
-      additional_properties[count].key = key;
-      printf("additional_properties[0].key: %s",
-             additional_properties[0].key); // printdb
-      additional_properties[count].value = value;
+      struct AdditionalProperty addprop = {.key = key, .value = value};
+      additional_properties[count] = addprop;
+      printf("additional_properties[count.key = %s\n",
+             additional_properties[count].key);
+      printf("additional_properties[count.value = %s\n",
+             additional_properties[count].value);
+      count++;
     }
-    count++;
   }
 
-  for (int i = 0; i < count || i < 10; i++) {
-    printf("Additional Properties %i\n", i);
-    printf("Key: %s\n", additional_properties[i].key);
-    printf("Value: %s\n", additional_properties[i].value);
-    printf("---\n");
+  for (int i = 0; i < 10; i++) {
+    printf("%s", additional_properties[i].key);
+    printf("%s", additional_properties[i].value);
   }
+
   return 0;
 }
