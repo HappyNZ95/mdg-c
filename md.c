@@ -87,19 +87,22 @@ int main(void) {
     char *key = strtok(addprop_buf, delimiter);
     char *value = strtok(NULL, delimiter);
     if (key != NULL && value != NULL) {
-      struct AdditionalProperty addprop = {.key = key, .value = value};
+      struct AdditionalProperty addprop = {.key = strdup(key),
+                                           .value = strdup(value)};
+      printf("count: %i\n", count);
       additional_properties[count] = addprop;
-      printf("additional_properties[count.key = %s\n",
+      printf("additional_properties[%i].key = %s\n", count,
              additional_properties[count].key);
-      printf("additional_properties[count.value = %s\n",
+      printf("additional_properties[%i].value = %s\n", count,
              additional_properties[count].value);
       count++;
     }
   }
 
   for (int i = 0; i < 10; i++) {
-    printf("%s", additional_properties[i].key);
-    printf("%s", additional_properties[i].value);
+    printf("--------\n");
+    printf("%s = ", additional_properties[i].key);
+    printf("%s\n", additional_properties[i].value);
   }
 
   return 0;
